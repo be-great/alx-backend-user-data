@@ -1,4 +1,4 @@
-# #!/usr/bin/env python3
+#!/usr/bin/env python3
 # """ End-to-end integration test"""
 
 # import requests
@@ -132,13 +132,22 @@
 #     reset_token = reset_password_token(EMAIL)
 #     update_password(EMAIL, reset_token, NEW_PASSWD)
 #     log_in(EMAIL, NEW_PASSWD)
-#!/usr/bin/env python3
-"""
-Main file
-"""
+# """
+# Main file
+# """
+# from user import User
+
+# print(User.__tablename__)
+
+# for column in User.__table__.columns:
+#     print("{}: {}".format(column, column.type))
+from db import DB
 from user import User
 
-print(User.__tablename__)
+my_db = DB()
 
-for column in User.__table__.columns:
-    print("{}: {}".format(column, column.type))
+user_1 = my_db.add_user("test@test.com", "SuperHashedPwd")
+print(user_1.id)
+
+user_2 = my_db.add_user("test1@test.com", "SuperHashedPwd1")
+print(user_2.id)
