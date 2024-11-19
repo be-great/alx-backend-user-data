@@ -49,6 +49,20 @@ class DB:
         self._session.add(user)
         self._session.commit()
         return user
+
+    def find_user_by(self, **kwargs) -> User:
+        """Finds user by keyword args"""
+        if not kwargs:
+            raise InvalidRequestError
+        column = User.__table__.columns.keys()
+        for key in kwargs.keys():
+            if key not in column:
+                raise InvalidRequestError
+        user = self._session.query(User).filter_by(**kwargs).first()
+        if user is None:
+            raise NoResultFound
+        return user
+
     # def find_user_by(self, **kwargs) -> User:
     #     """ Finds user by key word args
     #     Return: First row found in the users table as filtered by kwargs
