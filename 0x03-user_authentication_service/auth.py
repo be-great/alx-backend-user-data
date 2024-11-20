@@ -61,6 +61,29 @@ class Auth:
         if bcrypt.checkpw(encodedPass, userPassword):
             return True
         return False
+
+    def create_session(self, email: str) -> str:
+        """Get session id"""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        session_id = _generate_uuid()
+        self._db.update_user(user.id, session_id=session_id)
+        return session_id
+
+#     def create_session(self, email: str) -> str:
+#         """ Returns session ID for a user """
+#         try:
+#             user = self._db.find_user_by(email=email)
+#         except NoResultFound:
+#             return None
+
+#         session_id = _generate_uuid()
+
+#         self._db.update_user(user.id, session_id=session_id)
+
+#         return session_id
 # class Auth
 #     def __init__(self):
 #         self._db = DB()
