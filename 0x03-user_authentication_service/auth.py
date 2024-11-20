@@ -19,6 +19,10 @@ def _hash_password(password: str) -> str:
 #     hashed = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 #     return hashed
 
+def _generate_uuid() -> str:
+    """Generate uuids"""
+    uuid = uuid4()
+    return str(uuid)
 
 # def _generate_uuid() -> str:
 #     """Returns a string representation of a new UUID"""
@@ -56,21 +60,6 @@ class Auth:
         if bcrypt.checkpw(encodedPass, userPassword):
             return True
         return False
-#     def valid_login(self, email: str, password: str) -> bool:
-#         """If password is valid returns true, else, false"""
-#         try:
-#             user = self._db.find_user_by(email=email)
-#         except NoResultFound:
-#             return False
-
-#         user_password = user.hashed_password
-#         encoded_password = password.encode()
-
-#         if bcrypt.checkpw(encoded_password, user_password):
-#             return True
-
-#         return False
-
 # class Auth
 #     def __init__(self):
 #         self._db = DB()
