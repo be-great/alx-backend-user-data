@@ -75,3 +75,5 @@ class DB:
         for key, value in kwargs.items():
             setattr(user, key, value)
         self._session.commit()
+
+    
