@@ -63,20 +63,17 @@ def logout() -> str:
     AUTH.destroy_session(user.id)
     return redirect('/')
 
-# @app.route('/profile', methods=['GET'])
-# def profile() -> str:
-#     """ If the user exist, respond with a 200 HTTP status and a JSON Payload
-#     Otherwise respond with a 403 HTTP status.
-#     """
-#     session_id = request.cookies.get("session_id", None)
-
-#     if session_id is None:
-#         abort(403)
-
-#     user = AUTH.get_user_from_session_id(session_id)
-
-#     if user is None:
-#         abort(403)
+@app.route('/profile', methods=['GET'])
+def profile() -> str:
+    """if user exist return 200 http status and json payload"""
+    sess_id = request.cookies.get("session_id",None)
+    if sess_id is None:
+        abort(403)
+    user = AUTH.get_user_from_session_id(sess_id)
+    if user is None:
+        abort(403)
+    msg = {"email": user.email}
+    return jsonify(msg), 200
 
 #     msg = {"email": user.email}
 
