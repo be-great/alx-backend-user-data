@@ -34,44 +34,29 @@ def register_user() -> str:
     msg = {"email": email, "message": "user created"}
     return jsonify(msg)
 
-# @app.route('/users', methods=['POST'])
-# def register_user() -> str:
-#     """Registers a new user if it does not exist before"""
-#     try:
-#         email = request.form['email']
-#         password = request.form['password']
-#     except KeyError:
-#         abort(400)
 
-#     try:
-#         user = AUTH.register_user(email, password)
-#     except ValueError:
-#         return jsonify({"message": "email already registered"}), 400
-
-#     msg = {"email": email, "message": "user created"}
-#     return jsonify(msg)
-
+@app.route('/sessions', methods=['POST'])
+def login() -> str:
+    """login in a user"""
+    try:
+        email = request.form['email']
+        password = request.form['password']
+    except KeyError:
+        abort(400)
+    if not AUTH.valid_login(email, password):
+        abort(401)
+    sess_id = AUTH.create_session(email)
+    msg = {"email": email, "message": "logged in"}
+    resp = jsonify(msg)
+    resp.set_cookie("session_id", sess_id)
+    return resp
 
 # @app.route('/sessions', methods=['POST'])
-# def log_in() -> str:
-#     """ Logs in a user and returns session ID """
-#     try:
-#         email = request.form['email']
-#         password = request.form['password']
-#     except KeyError:
-#         abort(400)
-
-#     if not AUTH.valid_login(email, password):
-#         abort(401)
-
-#     session_id = AUTH.create_session(email)
-
-#     msg = {"email": email, "message": "logged in"}
-#     response = jsonify(msg)
-
-#     response.set_cookie("session_id", session_id)
-
-#     return response
+# def logout() -> str:
+#     """logout the user"""
+#     sess_id = request.cookies.get("session_id", None)
+#     if sess_id is None:
+#         abort(403)
 
 
 # @app.route('/sessions', methods=['DELETE'])
