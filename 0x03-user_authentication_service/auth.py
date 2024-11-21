@@ -91,6 +91,29 @@ class Auth:
         self._db.update_user(user.id, session_id=None)
         return None
 
+    def get_reset_password_token(self, email: str) -> str:
+        """generates a reset password"""
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            raise ValueError
+        reset_token = _generate_uuid()
+        self._db.update_user(user.id, reset_token)
+        return reset_token
+
+#     def get_reset_password_token(self, email: str) -> str:
+#         """Generates a reset password token if user exists"""
+#         try:
+#             user = self._db.find_user_by(email=email)
+#         except NoResultFound:
+#             raise ValueError
+
+#         reset_token = _generate_uuid()
+
+#         self._db.update_user(user.id, reset_token=reset_token)
+
+#         return reset_token
+
 #     def create_session(self, email: str) -> str:
 #         """ Returns session ID for a user """
 #         try:
@@ -149,19 +172,6 @@ class Auth:
 #         self._db.update_user(user.id, session_id=None)
 
 #         return None
-
-#     def get_reset_password_token(self, email: str) -> str:
-#         """Generates a reset password token if user exists"""
-#         try:
-#             user = self._db.find_user_by(email=email)
-#         except NoResultFound:
-#             raise ValueError
-
-#         reset_token = _generate_uuid()
-
-#         self._db.update_user(user.id, reset_token=reset_token)
-
-#         return reset_token
 
 #     def update_password(self, reset_token: str, password: str) -> None:
 #         """Uses reset token to validate update of users password"""

@@ -77,11 +77,6 @@ def profile() -> str:
     msg = {"email": user.email}
     return jsonify(msg), 200
 
-#     msg = {"email": user.email}
-
-#     return jsonify(msg), 200
-
-
 # @app.route('/reset_password', methods=['POST'])
 # def reset_password() -> str:
 #     """If the email is not registered, respond with a 403 status code.
