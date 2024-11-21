@@ -51,6 +51,7 @@ def login() -> str:
     resp.set_cookie("session_id", sess_id)
     return resp
 
+
 @app.route('/sessions', methods=['DELETE'])
 def logout() -> str:
     """logout the user"""
@@ -63,10 +64,11 @@ def logout() -> str:
     AUTH.destroy_session(user.id)
     return redirect('/')
 
+
 @app.route('/profile', methods=['GET'])
 def profile() -> str:
     """if user exist return 200 http status and json payload"""
-    sess_id = request.cookies.get("session_id",None)
+    sess_id = request.cookies.get("session_id", None)
     if sess_id is None:
         abort(403)
     user = AUTH.get_user_from_session_id(sess_id)
