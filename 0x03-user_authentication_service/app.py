@@ -51,12 +51,12 @@ def login() -> str:
     resp.set_cookie("session_id", sess_id)
     return resp
 
-# @app.route('/sessions', methods=['POST'])
-# def logout() -> str:
-#     """logout the user"""
-#     sess_id = request.cookies.get("session_id", None)
-#     if sess_id is None:
-#         abort(403)
+@app.route('/sessions', methods=['POST'])
+def logout() -> str:
+    """logout the user"""
+    sess_id = request.cookies.get("session_id", None)
+    if sess_id is None:
+        abort(403)
 
 
 # @app.route('/sessions', methods=['DELETE'])
